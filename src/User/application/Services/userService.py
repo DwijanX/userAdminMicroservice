@@ -1,18 +1,19 @@
 from application.UseCases.useCase import CrudUserCase
 from core.Entity.user import User
+from adapters.DTO.userDTO import UserDTO
 
 class UserService:
     def __init__(self):
         self.userUseCase = CrudUserCase()
 
-    def createUser(self, username: str, email: str, password: str) -> User:
-        return self.userUseCase.createUser(username, email, password)
+    def createUser(self, userDTO: UserDTO) -> User:
+        return self.userUseCase.createUser(userDTO.username, userDTO.email, userDTO.password)
 
-    def getUser(self, user_id: int) -> User:
-        return self.userUseCase.getUser(user_id)
+    def getUser(self, userDTO: UserDTO) -> User:
+        return self.userUseCase.getUser(userDTO.userId)
 
-    def updateUser(self, user_id: int, username: str, email: str, password: str) -> User:
-        return self.userUseCase.updateUser(user_id, username, email, password)
+    def updateUser(self, userDTO: UserDTO) -> User:
+        return self.userUseCase.updateUser(userDTO.userId, userDTO.username, userDTO.email, userDTO.password)
 
-    def deleteUser(self, user_id: int) -> None:
-        self.userUseCase.deleteUser(user_id)
+    def deleteUser(self, userDTO: UserDTO) -> None:
+        self.userUseCase.deleteUser(userDTO.userId)

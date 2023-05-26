@@ -1,18 +1,16 @@
 # app/controllers/user_controller.py
 from flask import Blueprint, request, jsonify
 from application.Services.userService import UserService
+from adapters.DTO.userDTO import UserDTO
 
 userBP = Blueprint('user', __name__)
 
 @userBP.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
-    username = data['username']
-    email = data['email']
-    password = data['password']
-
-    user_service = UserService()  # Instancia del servicio de usuario
-    user = user_service.createUser(username, email, password)
+    userDto=UserDTO(data['username'],data['email'],data['password'])
+    user_service = UserService()  
+    user = user_service.createUser(userDto)
 
     if user:
         response = {
@@ -27,8 +25,10 @@ def create_user():
 
 @userBP.route('/users/<int:user_id>', methods=['GET'])
 def get_user(userID):
-    user_service = UserService()  # Instancia del servicio de usuario
-    user = user_service.getUser(userID)
+    user_service = UserService()  
+    userDto=UserDTO(userID)
+
+    user = user_service.getUser(userDto)
 
     if user:
         response = {
@@ -43,12 +43,10 @@ def get_user(userID):
 @userBP.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(userID):
     data = request.get_json()
-    username = data['username']
-    email = data['email']
-    password = data['password']
+    userDto=UserDTO(userID,data['username'],data['email'],data['password'])
 
     user_service = UserService()  # Instancia del servicio de usuario
-    user = user_service.updateUser(userID, username, email, password)
+    user = user_service.updateUser(userDto)
 
     if user:
         response = {
@@ -63,6 +61,7 @@ def update_user(userID):
 
 @userBP.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(userID):
-    user_service = UserService()  # Instancia del servicio de usuario
-    user_service.deleteUser(userID)
+    user_service = UserService() 
+    userDto=UserDTO(userID)
+    user_service.deleteUser(userDto)
     return jsonify({'message': 'User deleted successfully'}), 200
