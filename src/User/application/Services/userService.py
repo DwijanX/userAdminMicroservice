@@ -1,4 +1,4 @@
-from application.UseCases.useCase import CrudUserCase
+from application.Port.In.crudUseCase import CrudUserCase
 from core.Entity.user import User
 from adapters.DTO.userDTO import UserDTO
 
