@@ -8,7 +8,7 @@ userBP = Blueprint('user', __name__)
 @userBP.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
-    userDto=UserDTO(data['username'],data['email'],data['password'])
+    userDto=UserDTO(username=data['username'],email=data['email'])
     user_service = UserService()  
     user = user_service.createUser(userDto)
 
@@ -23,7 +23,7 @@ def create_user():
     else:
         return jsonify({'message': 'Failed to create user'}), 500
 
-@userBP.route('/users/<int:user_id>', methods=['GET'])
+@userBP.route('/users/<int:userID>', methods=['GET'])
 def get_user(userID):
     user_service = UserService()  
     userDto=UserDTO(userID)
@@ -40,10 +40,10 @@ def get_user(userID):
     else:
         return jsonify({'message': 'User not found'}), 404
 
-@userBP.route('/users/<int:user_id>', methods=['PUT'])
+@userBP.route('/users/<int:userID>', methods=['PUT'])
 def update_user(userID):
     data = request.get_json()
-    userDto=UserDTO(userID,data['username'],data['email'],data['password'])
+    userDto=UserDTO(userID,data['username'],data['email'])
 
     user_service = UserService()  # Instancia del servicio de usuario
     user = user_service.updateUser(userDto)
@@ -59,7 +59,7 @@ def update_user(userID):
     else:
         return jsonify({'message': 'User not found'}), 404
 
-@userBP.route('/users/<int:user_id>', methods=['DELETE'])
+@userBP.route('/users/<int:userID>', methods=['DELETE'])
 def delete_user(userID):
     user_service = UserService() 
     userDto=UserDTO(userID)

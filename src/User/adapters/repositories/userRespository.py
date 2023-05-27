@@ -11,7 +11,7 @@ class UserRepository:
 
     @staticmethod
     def getInstance():
-        configFile = r'config\ruserRepository.yaml'
+        configFile = r'C:\Users\chris\Documents\MicroserviceAdmin\src\User\config\userRepository.yaml'
         with open(configFile) as f:
             config = yaml.safe_load(f)
         host = config['host']
@@ -31,8 +31,8 @@ class UserRepository:
         connection = self.__connectToDB__()
 
         cursor = connection.cursor()
-        insert_query = "INSERT INTO users (username, email, password) VALUES (%s, %s, %s)"
-        values = (user.username, user.email, user.password)
+        insert_query = "INSERT INTO users (username, email) VALUES (%s, %s)"
+        values = (user.username, user.email)
         cursor.execute(insert_query, values)
         userID = cursor.lastrowid
         user.userID = userID
@@ -45,33 +45,35 @@ class UserRepository:
         connection = self.__connectToDB__()
 
         cursor = connection.cursor()
-        select_query = "SELECT username, email, password FROM users WHERE user_id = %s"
+        select_query = "SELECT username, email FROM users WHERE userID = %s"
         cursor.execute(select_query, (userID,))
         result = cursor.fetchone()
         cursor.close()
         connection.close()
         if result:
-            username, email, password = result
-            return User(userID, username, email, password)
+            username, email = result
+            return User(userID, username, email)
         return None
 
     def update(self, user: User) -> User:
         connection = self.__connectToDB__()
 
         cursor = connection.cursor()
-        update_query = "UPDATE users SET username = %s, email = %s, password = %s WHERE user_id = %s"
-        values = (user.username, user.email, user.password, user.user_id)
+        update_query = "UPDATE users SET username = %s, email = %s WHERE userID = %s"
+        values = (user.username, user.email, user.userID)
         cursor.execute(update_query, values)
         connection.commit()
         cursor.close()
         connection.close()
         return user
 
-    def delete(self, user_id: int) -> None:
+    def delete(self, userID: int) -> None:
+        print("llega")
+        print(type(userID))
         connection = self.__connectToDB__()
         cursor = connection.cursor()
-        delete_query = "DELETE FROM users WHERE user_id = %s"
-        cursor.execute(delete_query, (user_id,))
+        delete_query = "DELETE FROM users WHERE userID = %s"
+        cursor.execute(delete_query, (userID,))
         connection.commit()
         cursor.close()
         connection.close()

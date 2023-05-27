@@ -7,13 +7,13 @@ class UserService:
         self.userUseCase = CrudUserCase()
 
     def createUser(self, userDTO: UserDTO) -> User:
-        return self.userUseCase.createUser(userDTO.username, userDTO.email, userDTO.password)
+        return self.userUseCase.createUser(userDTO.username, userDTO.email)
 
     def getUser(self, userDTO: UserDTO) -> User:
         return self.userUseCase.getUser(userDTO.userId)
 
     def updateUser(self, userDTO: UserDTO) -> User:
-        return self.userUseCase.updateUser(userDTO.userId, userDTO.username, userDTO.email, userDTO.password)
+        return self.userUseCase.updateUser(userDTO.userId,userDTO.username, userDTO.email)
 
     def deleteUser(self, userDTO: UserDTO) -> None:
         self.userUseCase.deleteUser(userDTO.userId)
