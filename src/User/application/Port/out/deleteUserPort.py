@@ -2,13 +2,13 @@ from adapters.out.AuthenticationAdapter import AuthenticationAdapter
 from adapters.out.BillingServiceAdapter import BillingServiceAdapter
 from adapters.out.MailServiceAdapter import MailServiceAdapter
 
-class updateUsernamePort:
+class DeleteUserPort:
     def __init__(self):
         self.authAdapter=AuthenticationAdapter()
         self.billingAdapter=BillingServiceAdapter()
         self.mailAdapter=MailServiceAdapter()
-    def updateUsername(self,userID,username):
-        self.authAdapter.changeUsername(userID,username)
-        self.billingAdapter.changeUsername(userID,username)
-        self.mailAdapter.changeUsername(userID,username)
+    def deleteUser(self,userID):
+        self.authAdapter.deleteUser(userID)
+        self.billingAdapter.deleteUser(userID)
+        self.mailAdapter.deleteUser(userID)
 

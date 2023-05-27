@@ -11,7 +11,7 @@ class UserRepository:
 
     @staticmethod
     def getInstance():
-        configFile = r'C:\Users\chris\Documents\MicroserviceAdmin\src\User\config\userRepository.yaml'
+        configFile = 'src/User/config/userRepository.yaml'
         with open(configFile) as f:
             config = yaml.safe_load(f)
         host = config['host']

@@ -1,6 +1,6 @@
 import requests
 
-class AuthenticationAdapter:
+class MailServiceAdapter:
     def __init__(self):
         self.baseUrl = "baseUrl"
 
@@ -18,24 +18,6 @@ class AuthenticationAdapter:
                 print("Username changed successfully.")
             else:
                 print("Failed to change username. Status code:", response.status_code)
-        except requests.exceptions.RequestException as e:
-            print("Error occurred while communicating with the microservice:", str(e))
-    def registerUser(self,userID,username,password):
-        endpoint = '/registerUser'
-        url = self.baseUrl + endpoint
-
-        payload = {
-            "userID":userID,
-            'username': username,
-            'password': password
-        }
-
-        try:
-            response = requests.put(url, json=payload)
-            if response.status_code == 200:
-                print("User registered successfully.")
-            else:
-                print("Failed to register user. Status code:", response.status_code)
         except requests.exceptions.RequestException as e:
             print("Error occurred while communicating with the microservice:", str(e))
     def deleteUser(self,userID):
