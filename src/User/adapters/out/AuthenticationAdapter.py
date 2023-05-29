@@ -2,12 +2,12 @@ import requests
 
 class AuthenticationAdapter:
     def __init__(self):
-        self.baseUrl = "baseUrl"
+        self.baseUrl = "https://4197-181-177-147-247.ngrok-free.app/"
 
     def changeUsername(self, userID, newUsername):
-        endpoint = '/changeUsername/'+str(userID)
+        endpoint = '/update_username/'+str(userID)
         url = self.baseUrl + endpoint
-
+        
         payload = {
             'new_username': newUsername
         }
@@ -21,7 +21,7 @@ class AuthenticationAdapter:
         except requests.exceptions.RequestException as e:
             print("Error occurred while communicating with the microservice:", str(e))
     def registerUser(self,userID,username,password):
-        endpoint = '/registerUser'
+        endpoint = '/register'
         url = self.baseUrl + endpoint
 
         payload = {
@@ -29,17 +29,17 @@ class AuthenticationAdapter:
             'username': username,
             'password': password
         }
-
+        print(payload)
         try:
-            response = requests.put(url, json=payload)
+            response = requests.post(url, json=payload)
             if response.status_code == 200:
-                print("User registered successfully.")
+                print("User registered in auth service successfully.")
             else:
-                print("Failed to register user. Status code:", response.status_code)
+                print("Failed to register user in auth service. Status code:", response.status_code)
         except requests.exceptions.RequestException as e:
             print("Error occurred while communicating with the microservice:", str(e))
     def deleteUser(self,userID):
-        endpoint = '/deleteUser/'+str(userID)
+        endpoint = '/delete/'+str(userID)
         url = self.baseUrl + endpoint        
         try:
             response = requests.delete(url)

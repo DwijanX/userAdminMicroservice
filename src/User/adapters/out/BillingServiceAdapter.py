@@ -2,26 +2,11 @@ import requests
 
 class BillingServiceAdapter:
     def __init__(self):
-        self.baseUrl = "baseUrl"
+        self.baseUrl = "https://5dbc-200-87-92-243.sa.ngrok.io/"
 
-    def changeUsername(self, userID, newUsername):
-        endpoint = '/changeUsername/'+str(userID)
-        url = self.baseUrl + endpoint
 
-        payload = {
-            'new_username': newUsername
-        }
-
-        try:
-            response = requests.put(url, json=payload)
-            if response.status_code == 200:
-                print("Username changed successfully.")
-            else:
-                print("Failed to change username. Status code:", response.status_code)
-        except requests.exceptions.RequestException as e:
-            print("Error occurred while communicating with the microservice:", str(e))
     def deleteUser(self,userID):
-        endpoint = '/deleteUser/'+str(userID)
+        endpoint = '/bills/deletefromuser/'+str(userID)
         url = self.baseUrl + endpoint        
         try:
             response = requests.delete(url)

@@ -68,8 +68,6 @@ class UserRepository:
         return user
 
     def delete(self, userID: int) -> None:
-        print("llega")
-        print(type(userID))
         connection = self.__connectToDB__()
         cursor = connection.cursor()
         delete_query = "DELETE FROM users WHERE userID = %s"

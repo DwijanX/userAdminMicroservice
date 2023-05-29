@@ -21,9 +21,11 @@ class UserService:
     def updateUser(self, userDTO: UserDTO) -> User:
         modifiedUser= self.userUseCase.updateUser(userDTO.userId,userDTO.username, userDTO.email)
         if modifiedUser:
-            updateUsernamePort().updateUsername(userDTO.userId,userDTO.username)
+            updateUsernamePort().updateUsername(userDTO.userId,userDTO.username,modifiedUser.username)
         return modifiedUser
 
     def deleteUser(self, userDTO: UserDTO) -> None:
-        self.userUseCase.deleteUser(userDTO.userId)
-        DeleteUserPort().deleteUser(userDTO.userId)
+        user=self.userUseCase.getUser(userDTO.userId)
+        if user:
+            self.userUseCase.deleteUser(userDTO.userId)
+            DeleteUserPort().deleteUser(userDTO.userId,user.email)
